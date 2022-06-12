@@ -14,8 +14,10 @@
     "electron": "^18.2.4",
     "electron-rebuild": "^3.2.7",
     "electron-reload": "^2.0.0-alpha.1",
+    "text-to-picture": "npm:@automattic/text-to-picture@^1.0.0"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
+    "systeminformation": "^5.11.15"
   }
 }
