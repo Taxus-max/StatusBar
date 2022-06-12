@@ -1,0 +1,21 @@
+{
+  "name": "statusbar",
+  "version": "1.0.0",
+  "description": "A simple app to display system status on windows taskbar",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Taxus",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "electron": "^18.2.4",
+    "electron-rebuild": "^3.2.7",
+    "electron-reload": "^2.0.0-alpha.1",
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+  }
+}
