@@ -1,4 +1,6 @@
 const {Tray, Menu, app, nativeImage} = require("electron");
+const path = require('path');
+const {spawn} = require('child_process');
 const textToPicture = require('text-to-picture')
 let tray = null;
 let tray2 = null;
@@ -25,16 +27,12 @@ const watcher = () =>{
     si.currentLoad()
         .then(data =>{
             changeLoadReadout(parseInt(data.currentLoad))
-            //console.log(data.currentLoad)
         })
 
-    si.cpuTemperature()
-        .then(data => {
-            changeTempReadout(parseInt(data.main))
-            //console.log(data)
-        })
-        .catch(error => console.error(error));
-
+    let python = spawn('python', [path.join(app.getAppPath(),'python_scripts/cpuTemp.py')]);
+    python.stdout.on('data', (data) => {
+        changeTempReadout(parseInt(data.toString()))
+    });
 }
 const changeLoadReadout = (load) =>{
     let cLoad = load.toString();
@@ -53,7 +51,6 @@ const changeLoadReadout = (load) =>{
     }).then(str => {
         let image = nativeImage.createFromDataURL(str)
         tray2.setImage(image)
-        //console.log("Done")
     }).catch(err => null)
 
 }
@@ -75,7 +72,6 @@ const changeTempReadout = (temp) => {
     }).then(str => {
         let image = nativeImage.createFromDataURL(str)
         tray.setImage(image)
-        //console.log("Done")
     }).catch(err => null)
 
 }
