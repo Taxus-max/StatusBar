@@ -1,4 +1,6 @@
 const {Tray, Menu, app, nativeImage} = require("electron");
+const {spawn} = require('child_process');
+const path = require('path');
 const textToPicture = require('text-to-picture')
 let tray = null;
 let tray2 = null;
@@ -25,15 +27,12 @@ const watcher = () =>{
     si.currentLoad()
         .then(data =>{
             changeLoadReadout(parseInt(data.currentLoad))
-            //console.log(data.currentLoad)
         })
 
-    si.cpuTemperature()
-        .then(data => {
-            changeTempReadout(parseInt(data.main))
-            //console.log(data)
-        })
-        .catch(error => console.error(error));
+    let python = spawn('python', [path.join(app.getAppPath(),'python_scripts/cpuTemp.py')]);
+    python.stdout.on('data', (data) => {
+        changeTempReadout(parseInt(data.toString()))
+    });
 
 }
 const changeLoadReadout = (load) =>{
