@@ -17,7 +17,6 @@
     "text-to-picture": "npm:@automattic/text-to-picture@^1.0.0"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "systeminformation": "^5.11.15"
+    "electron-squirrel-startup": "^1.0.0"
   }
 }
