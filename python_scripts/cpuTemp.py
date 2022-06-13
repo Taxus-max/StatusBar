@@ -10,10 +10,14 @@ def init_Monitor() :
 
 
 data = init_Monitor()
-
+response = ""
 
 for i in data.Hardware:
     for sensor in i.Sensors:
+        if sensor.Name == "CPU Total":
+            response += str(int(sensor.Value))
         if sensor.Name == "CPU Package" and str(sensor.SensorType) == "Temperature":
-            print(sensor.Value)
-            sys.stdout.flush()
+            response += "|" + str(int(sensor.Value))
+
+print(response)
+sys.stdout.flush()

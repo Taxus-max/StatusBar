@@ -4,7 +4,6 @@ const path = require('path');
 const textToPicture = require('text-to-picture')
 let tray = null;
 let tray2 = null;
-const si = require('systeminformation');
 
 const createTaskbarIcon = () =>{
     tray = new Tray(__dirname + '/assets/tmp-logo.png')
@@ -24,14 +23,12 @@ const createTaskbarIcon = () =>{
 }
 
 const watcher = () =>{
-    si.currentLoad()
-        .then(data =>{
-            changeLoadReadout(parseInt(data.currentLoad))
-        })
-
     let python = spawn('python', [path.join(app.getAppPath(),'python_scripts/cpuTemp.py')]);
     python.stdout.on('data', (data) => {
-        changeTempReadout(parseInt(data.toString()))
+        let res = data.toString().split("|")
+        console.log(data.toString())
+        changeLoadReadout(parseInt(res[0]))
+        changeTempReadout(parseInt(res[1]))
     });
 
 }
@@ -52,7 +49,6 @@ const changeLoadReadout = (load) =>{
     }).then(str => {
         let image = nativeImage.createFromDataURL(str)
         tray2.setImage(image)
-        //console.log("Done")
     }).catch(err => null)
 
 }
